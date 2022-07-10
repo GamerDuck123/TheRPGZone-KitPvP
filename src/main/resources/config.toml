@@ -1,0 +1,25 @@
+[databases]
+    [databases.player]
+        enabled = false
+        autoReconnect = true
+        host = "127.0.0.1"
+        database = "playerDatabase"
+        username = "playerUsername"
+        password = "playerPassword"
+        port = 3306
+    [databases.permissions]
+        enabled = false
+        autoReconnect = true
+        host = "127.0.0.1"
+        database = "economyDatabase"
+        username = "economyUsername"
+        password = "economyPassword"
+        port = 3306
+    [databases.economy]
+        enabled = false
+        autoReconnect = true
+        host = "127.0.0.1"
+        database = "economyDatabase"
+        username = "economyUsername"
+        password = "economyPassword"
+        port = 3306
