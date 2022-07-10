@@ -11,9 +11,9 @@
         enabled = false
         autoReconnect = true
         host = "127.0.0.1"
-        database = "economyDatabase"
-        username = "economyUsername"
-        password = "economyPassword"
+        database = "permissionsDatabase"
+        username = "permissionsUsername"
+        password = "permissionsPassword"
         port = 3306
     [databases.economy]
         enabled = false
@@ -23,3 +23,15 @@
         username = "economyUsername"
         password = "economyPassword"
         port = 3306
+[economy]
+    startingBalance = 200
+    maxBalance = 100000000
+    minBalance = 0
+[starting]
+    startingKit = "starter"
+    startingRank = "default"
+[spawn]
+    instance = "world"
+    x = 0
+    y = 100
+    z = 0
