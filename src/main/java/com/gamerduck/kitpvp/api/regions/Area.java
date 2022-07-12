@@ -11,30 +11,33 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Area implements Cloneable {
-	@Getter Cuboid cube;
-	@Getter HashMap<Flag, Boolean> flags;
-	protected Area(Cuboid cube) {
-		this.cube = cube;
-		this.flags = new HashMap<Flag, Boolean>();
-	}
+    @Getter
+    Cuboid cube;
+    @Getter
+    HashMap<Flag, Boolean> flags;
 
-	public boolean isPlayerInArea(Player p) {
-		return cube.isInCube(p.getPosition());
-	}
+    protected Area(Cuboid cube) {
+        this.cube = cube;
+        this.flags = new HashMap<Flag, Boolean>();
+    }
 
-	public void isPlayerInArea(Player p, Consumer<Boolean> isInArea) {
-		Executor.runAsync(() -> {
-			isInArea.accept(cube.isInCube(p.getPosition()));
-		});
-	}
+    public boolean isPlayerInArea(Player p) {
+        return cube.isInCube(p.getPosition());
+    }
 
-	public void allPlayersInArea(Consumer<List<Player>> players) {
-		Executor.runAsync(() -> {
-			players.accept(MinecraftServer.getConnectionManager().getOnlinePlayers().stream().filter(p -> cube.isInCube(p.getPosition())).collect(Collectors.toList()));
-		});
-	}
+    public void isPlayerInArea(Player p, Consumer<Boolean> isInArea) {
+        Executor.runAsync(() -> {
+            isInArea.accept(cube.isInCube(p.getPosition()));
+        });
+    }
 
-	public void addFlag(Flag flag, Boolean value) {
-		flags.put(flag, value);
-	}
+    public void allPlayersInArea(Consumer<List<Player>> players) {
+        Executor.runAsync(() -> {
+            players.accept(MinecraftServer.getConnectionManager().getOnlinePlayers().stream().filter(p -> cube.isInCube(p.getPosition())).collect(Collectors.toList()));
+        });
+    }
+
+    public void addFlag(Flag flag, Boolean value) {
+        flags.put(flag, value);
+    }
 }

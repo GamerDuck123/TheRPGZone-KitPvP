@@ -1,25 +1,3 @@
-/*
- * Scaffolding - Schematic library for Minestom
- *  Copyright (c) 2022 SLLCoding <luisjk266@gmail.com>
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the “Software”), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
- *  furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *  THE SOFTWARE.
- */
 package com.gamerduck.kitpvp.api.scaffolding.schematic.impl;
 
 import com.gamerduck.kitpvp.api.scaffolding.schematic.Region;
@@ -103,7 +81,8 @@ public class SpongeSchematic implements Schematic {
         if (nbtPalette == null) throw new NBTException("Invalid Schematic: No Palette");
 
         Set<String> keys = nbtPalette.getKeys();
-        if (keys.size() != maxPalette) throw new NBTException("Invalid Schematic: PaletteMax does not match Palette size");
+        if (keys.size() != maxPalette)
+            throw new NBTException("Invalid Schematic: PaletteMax does not match Palette size");
 
         for (String key : keys) {
             Integer value = nbtPalette.getInt(key);
@@ -173,7 +152,8 @@ public class SpongeSchematic implements Schematic {
                 short stateId = regionBlock.stateId();
 
                 Block block = Block.fromStateId(stateId);
-                if (block != null) futures.add(instance.loadOptionalChunk(absoluteBlockPosition).thenRun(() -> blockBatch.setBlock(absoluteBlockPosition, block)));
+                if (block != null)
+                    futures.add(instance.loadOptionalChunk(absoluteBlockPosition).thenRun(() -> blockBatch.setBlock(absoluteBlockPosition, block)));
             }
 
             CompletableFuture.allOf(futures.toArray(new CompletableFuture[]{})).join();
@@ -244,7 +224,7 @@ public class SpongeSchematic implements Schematic {
         for (Region.Block block : regionBlocks) {
             Pos pos = block.position();
             Block minestomBlock = Block.fromStateId(block.stateId());
-            if (minestomBlock != null)  {
+            if (minestomBlock != null) {
                 setter.setBlock(pos, minestomBlock);
             } else {
                 throw new IllegalStateException("Invalid block state id: " + block.stateId());

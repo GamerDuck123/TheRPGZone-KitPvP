@@ -1,6 +1,7 @@
 package com.gamerduck.kitpvp.api.regions.impl;
 
 import com.gamerduck.kitpvp.api.Executor;
+import com.gamerduck.kitpvp.api.interfaces.Manager;
 import com.gamerduck.kitpvp.api.Server;
 import com.gamerduck.kitpvp.api.player.GamePlayer;
 import com.gamerduck.kitpvp.api.regions.Area;
@@ -12,8 +13,12 @@ import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 
 import java.util.Optional;
 
-public class FlagHandler {
+public class FlagHandler implements Manager {
     public FlagHandler() {
+    }
+
+    @Override
+    public void register() {
         MinecraftServer.getGlobalEventHandler().addListener(EntityAttackEvent.class, (e) -> {
             Executor.runAsync(() -> {
                 if (e.getEntity() instanceof Player p
@@ -42,5 +47,6 @@ public class FlagHandler {
                 }
             });
         });
+
     }
 }

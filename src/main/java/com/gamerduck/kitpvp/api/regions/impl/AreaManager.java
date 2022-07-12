@@ -1,5 +1,6 @@
 package com.gamerduck.kitpvp.api.regions.impl;
 
+import com.gamerduck.kitpvp.api.interfaces.Manager;
 import com.gamerduck.kitpvp.api.Server;
 import com.gamerduck.kitpvp.api.player.GamePlayer;
 import com.gamerduck.kitpvp.api.regions.Area;
@@ -13,10 +14,15 @@ import net.minestom.server.item.Material;
 import java.util.HashMap;
 import java.util.Optional;
 
-public class AreaManager {
+public class AreaManager implements Manager {
     @Getter
     final HashMap<String, Area> areas;
+
     public AreaManager() {
+        areas = new HashMap<String, Area>();
+    }
+    @Override
+    public void register() {
         MinecraftServer.getGlobalEventHandler().addListener(PlayerUseItemOnBlockEvent.class, (e) -> {
             if (e.getItemStack().material() == Material.WOODEN_AXE) {
                 GamePlayer p = Server.getPlayerManager().getPlayer(e.getPlayer().getUuid());
@@ -33,7 +39,6 @@ public class AreaManager {
         }).addListener(PlayerBlockInteractEvent.class, e -> {
 
         });
-        areas = new HashMap<String, Area>();
     }
 
     public void addArea(String name, Area area) {
@@ -52,6 +57,7 @@ public class AreaManager {
     public void serialize() {
 
     }
+
     public void deserialize() {
 
     }

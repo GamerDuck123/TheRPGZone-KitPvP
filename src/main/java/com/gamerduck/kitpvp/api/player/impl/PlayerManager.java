@@ -1,5 +1,6 @@
 package com.gamerduck.kitpvp.api.player.impl;
 
+import com.gamerduck.kitpvp.api.interfaces.Manager;
 import com.gamerduck.kitpvp.api.player.GamePlayer;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
@@ -12,12 +13,17 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 
-public class PlayerManager {
+public class PlayerManager implements Manager {
     public final static Logger LOGGER = LoggerFactory.getLogger(PlayerManager.class);
     @Getter
     public final HashSet<GamePlayer> players;
+
     public PlayerManager() {
         players = new HashSet<GamePlayer>();
+    }
+
+    @Override
+    public void register() {
         MinecraftServer.getGlobalEventHandler().addListener(PlayerLoginEvent.class, (e) -> {
             addPlayer(new GamePlayer(e.getPlayer()));
         }).addListener(PlayerDisconnectEvent.class, (e) -> {
@@ -34,7 +40,9 @@ public class PlayerManager {
 
     public void addPlayer(GamePlayer player, Runnable ifFailed) {
         players.add(player);
-        if (!players.contains(player)) {ifFailed.run();}
+        if (!players.contains(player)) {
+            ifFailed.run();
+        }
     }
 
     public void removePlayer(GamePlayer player) {
@@ -61,6 +69,7 @@ public class PlayerManager {
     public void serialize() {
 
     }
+
     public void deserialize() {
 
     }

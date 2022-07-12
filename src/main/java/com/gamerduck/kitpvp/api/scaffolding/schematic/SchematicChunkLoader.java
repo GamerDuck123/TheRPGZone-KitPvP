@@ -1,25 +1,3 @@
-/*
- * Scaffolding - Schematic library for Minestom
- *  Copyright (c) 2022 SLLCoding <luisjk266@gmail.com>
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the “Software”), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
- *  furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *  THE SOFTWARE.
- */
 package com.gamerduck.kitpvp.api.scaffolding.schematic;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
@@ -77,6 +55,7 @@ public class SchematicChunkLoader implements IChunkLoader {
 
     /**
      * Creates a builder for a {@link SchematicChunkLoader}.
+     *
      * @return The builder.
      */
     public static @NotNull Builder builder() {
@@ -113,7 +92,8 @@ public class SchematicChunkLoader implements IChunkLoader {
         private int yOffset;
         private int zOffset;
 
-        private Builder() {}
+        private Builder() {
+        }
 
         /**
          * Adds a schematic to this chunk loader.
@@ -121,6 +101,7 @@ public class SchematicChunkLoader implements IChunkLoader {
          * Note that schematics are loaded in the order they are added.
          * <br>
          * This means that the last added schematic is the only schematic that is guaranteed to have all its data.
+         *
          * @param schematic The schematic to add.
          * @return This builder.
          */
@@ -132,6 +113,7 @@ public class SchematicChunkLoader implements IChunkLoader {
 
         /**
          * Specifies the offset that applies to all schematics added to this chunk loader.
+         *
          * @param x The x offset.
          * @param y The y offset.
          * @param z The z offset.
@@ -146,6 +128,7 @@ public class SchematicChunkLoader implements IChunkLoader {
 
         /**
          * Specifies the handler to use to save the chunks.
+         *
          * @param handler The handler.
          * @return This builder.
          */

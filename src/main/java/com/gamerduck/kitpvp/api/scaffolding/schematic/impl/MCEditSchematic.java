@@ -1,25 +1,3 @@
-/*
- * Scaffolding - Schematic library for Minestom
- *  Copyright (c) 2022 SLLCoding <luisjk266@gmail.com>
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the “Software”), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
- *  furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *  THE SOFTWARE.
- */
 package com.gamerduck.kitpvp.api.scaffolding.schematic.impl;
 
 import com.gamerduck.kitpvp.api.scaffolding.schematic.Region;
@@ -99,7 +77,8 @@ public class MCEditSchematic implements Schematic {
 
     private void readBlocksData(@NotNull NBTCompound nbtTag) throws NBTException {
         String materials = nbtTag.getString("Materials");
-        if (materials == null || !materials.equals("Alpha")) throw new NBTException("Invalid Schematic: Invalid Materials");
+        if (materials == null || !materials.equals("Alpha"))
+            throw new NBTException("Invalid Schematic: Invalid Materials");
 
         ImmutableByteArray blockIdPre = nbtTag.getByteArray("Blocks");
         if (blockIdPre == null) throw new NBTException("Invalid Schematic: No Blocks");
@@ -110,14 +89,16 @@ public class MCEditSchematic implements Schematic {
         blocksData.copyArray();
 
         byte[] addId;
-        if (nbtTag.containsKey("AddBlocks")) addId = Objects.requireNonNull(nbtTag.getByteArray("AddBlocks")).copyArray();
+        if (nbtTag.containsKey("AddBlocks"))
+            addId = Objects.requireNonNull(nbtTag.getByteArray("AddBlocks")).copyArray();
         else addId = new byte[0];
 
         blocks = new short[blockId.length];
         for (int index = 0; index < blockId.length; index++) {
             if ((index >> 1) >= addId.length) this.blocks[index] = (short) (blockId[index] & 0xFF);
             else {
-                if ((index & 1) == 0) this.blocks[index] = (short) (((addId[index >> 1] & 0x0F) << 8) + (blockId[index] & 0xFF));
+                if ((index & 1) == 0)
+                    this.blocks[index] = (short) (((addId[index >> 1] & 0x0F) << 8) + (blockId[index] & 0xFF));
                 else this.blocks[index] = (short) (((addId[index >> 1] & 0xF0) << 4) + (blockId[index] & 0xFF));
             }
         }
@@ -129,7 +110,7 @@ public class MCEditSchematic implements Schematic {
                 for (int z = 0; z < length; ++z) {
                     int index = y * width * length + z * width + x;
                     short stateId = this.blocks[index];
-                    regionBlocks.add(new Region.Block(new Pos(x+offsetX, y+offsetY, z+offsetZ), stateId));
+                    regionBlocks.add(new Region.Block(new Pos(x + offsetX, y + offsetY, z + offsetZ), stateId));
                 }
             }
         }
@@ -153,7 +134,8 @@ public class MCEditSchematic implements Schematic {
                 short stateId = regionBlock.stateId();
 
                 Block block = Block.fromStateId(stateId);
-                if (block != null) futures.add(instance.loadOptionalChunk(absoluteBlockPosition).thenRun(() -> blockBatch.setBlock(absoluteBlockPosition, block)));
+                if (block != null)
+                    futures.add(instance.loadOptionalChunk(absoluteBlockPosition).thenRun(() -> blockBatch.setBlock(absoluteBlockPosition, block)));
             }
 
             CompletableFuture.allOf(futures.toArray(new CompletableFuture[]{})).join();
@@ -197,7 +179,7 @@ public class MCEditSchematic implements Schematic {
         for (Region.Block block : regionBlocks) {
             Pos pos = block.position();
             Block minestomBlock = Block.fromStateId(block.stateId());
-            if (minestomBlock != null)  {
+            if (minestomBlock != null) {
                 setter.setBlock(pos, minestomBlock);
             } else {
                 throw new IllegalStateException("Invalid block state id: " + block.stateId());
