@@ -1,6 +1,7 @@
 package com.gamerduck.kitpvp.api;
 
 import com.electronwill.nightconfig.core.file.FileConfig;
+import com.gamerduck.kitpvp.api.kits.impl.KitRegistry;
 import com.gamerduck.kitpvp.api.listeners.impl.EventsManager;
 import com.gamerduck.kitpvp.api.permissions.impl.RankManager;
 import com.gamerduck.kitpvp.api.player.impl.PlayerManager;
@@ -45,6 +46,8 @@ public class Server {
     static final AreaManager areaManager = new AreaManager();
     @Getter
     static final EventsManager eventsManager = new EventsManager();
+    @Getter
+    static final KitRegistry kitRegistry = new KitRegistry();
     @Getter
     final FileConfig tomlConf;
 
